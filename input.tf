@@ -3,27 +3,21 @@
 
 variable "tenancy" {
     type = object({
+        id      = string,
         class   = number,
         buckets = string,
-        id      = string,
-        region  = map(string),
+        home_region  = map(string)
     })
     description = "Tenancy Configuration"
-}
-
-variable "service" {
-    type = object({
-        name   = string,
-        label  = string,
-        stage  = number,
-        region = map(string)
-    })
-    description = "Service Configuration"
 }
 
 variable "resident" {
     type = object({
         owner          = string,
+        name           = string,
+        label          = string,
+        stage          = number,
+        region         = map(string)
         compartments   = map(number),
         repository     = string,
         groups         = map(string),
@@ -32,7 +26,7 @@ variable "resident" {
         tag_namespaces = map(number),
         tags           = any
     })
-    description = "Configuration parameter for service operation"
+    description = "Service Configuration"
 }
 
 variable "network" {
@@ -50,12 +44,12 @@ variable "network" {
         subnets      = map(any),
         security_lists = any
     })
-    description = "Configuration parameter for the network topology"
+    description = "Network Configuration"
 }
 
 variable "input" {
     type = object({
         resident     = any
     })
-    description = "Resources deployed with the resident module"
+    description = "Resources identifier from resident module"
 }

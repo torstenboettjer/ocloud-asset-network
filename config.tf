@@ -30,17 +30,17 @@ data "oci_identity_compartments" "network" {
     compartment_id = var.tenancy.id
     access_level   = "ANY"
     compartment_id_in_subtree = true
-    name           = try(var.network.compartment, var.service.name)
-    state          = "ACTIVE"
-}
-
-data "oci_core_drgs" "segment" {
-    depends_on = [oci_core_drg.segment]
-    count          = var.network.gateways.drg.create == true ? 1 : 0
-    compartment_id = data.oci_identity_compartments.network.compartments[0].id
-}
-
-data "oci_core_internet_gateways" "segment" {
+				    name           = try(var.network.compartment, var.resident.name)
+				    state          = "ACTIVE"
+				}
+				
+		data "oci_core_drgs" "segment" {
+		    depends_on = [oci_core_drg.segment]
+		    count          = var.network.gateways.drg.create == true ? 1 : 0
+		    compartment_id = data.oci_identity_compartments.network.compartments[0].id
+		}
+		
+		data "oci_core_internet_gateways" "segment" {
     depends_on = [oci_core_internet_gateway.segment]
     count          = var.network.gateways.internet.create == true ? 1 : 0
     compartment_id = data.oci_identity_compartments.network.compartments[0].id
